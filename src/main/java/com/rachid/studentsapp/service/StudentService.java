@@ -10,4 +10,11 @@ public interface StudentService {
     StudentEntity getStudentById(Integer id);
 
     List<StudentEntity> getAllStudent();
+
+    StudentEntity deleteStudentById(Integer id);
+
+
+    StudentEntity updateStudent(StudentEntity studentEntity, Integer id);
+
+    StudentEntity getStudentByName(String name);
 }
