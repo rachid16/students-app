@@ -1,6 +1,7 @@
 package com.rachid.studentsapp.service.impl;
 
 import com.rachid.studentsapp.entity.StudentEntity;
+import com.rachid.studentsapp.exception.StudentNotFoundException;
 import com.rachid.studentsapp.repository.StudentRepository;
 import com.rachid.studentsapp.service.StudentService;
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -22,7 +24,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentEntity getStudentById(Integer id) {
-        return studentRepository.findById(id).get();
+        Optional<StudentEntity> studentEntity = studentRepository.findById(id);
+        if(!studentEntity.isPresent())
+            throw new StudentNotFoundException("student with id: "+ id + " does not exist in database.");
+
+        return studentEntity.get();
     }
 
     @Override
