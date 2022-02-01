@@ -1,5 +1,7 @@
 package com.rachid.studentsapp.entity;
 
+import com.rachid.studentsapp.validators.ValidId;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 public class StudentEntity {
 
     @Id
+    @ValidId(lower = 0, message = "The ID should be a valid number bigger than 0")
     @Column(name = "ID")
     private Integer id;
 
