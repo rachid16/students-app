@@ -5,6 +5,9 @@ import com.rachid.studentsapp.service.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/student")
+@Validated
 public class StudentController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
@@ -20,13 +24,17 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping("/")
-    public StudentEntity addStudent(@Valid  @RequestBody StudentEntity student){
+    public StudentEntity addStudent(@Valid  @RequestBody StudentEntity student, BindingResult result){
         LOGGER.info("Inside StudentController addStudent method. student {}", student);
+        List<ObjectError> allErrors = result.getAllErrors();
+        for(ObjectError error : allErrors)
+            LOGGER.info("error >> : {}", error);
+
         return studentService.addStudent(student);
     }
 
     @GetMapping("/{student-id}")
-    public StudentEntity getStudentById(@PathVariable("student-id") Integer id){
+    public StudentEntity getStudentById( @PathVariable("student-id") Integer id){
         LOGGER.info("Inside StudentController getStudentById method. student id: {}", id);
         return studentService.getStudentById(id);
     }

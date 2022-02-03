@@ -1,27 +1,31 @@
 package com.rachid.studentsapp.entity;
 
 import com.rachid.studentsapp.validators.ValidId;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
+@PropertySource(value={"classpath:messages.properties"})
 @Table(name = "student")
 public class StudentEntity {
 
     @Id
-    @ValidId(lower = 0, message = "The ID should be a valid number bigger than 0")
+    @ValidId(lower = 10 , message = "{messageId}")
     @Column(name = "ID")
     private Integer id;
 
-    @NotBlank(message = "please add student name. ")
+    @NotBlank(message = "{messageName}")
     @Column(name = "NAME")
     private String name;
 
     @Column(name = "ROLL_NUMBER")
+    @Pattern(regexp = "^[0-9A-Z]*$", message = "roll No accept only alphanumeric")
     private String rollNo;
 
     @Column(name = "ADDRESS")
