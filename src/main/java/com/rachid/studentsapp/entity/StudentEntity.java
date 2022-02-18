@@ -16,7 +16,7 @@ import javax.validation.constraints.Pattern;
 public class StudentEntity {
 
     @Id
-    @ValidId(lower = 10 , message = "{messageId}")
+    @ValidId(lower = 0 , message = "{messageId}")
     @Column(name = "ID")
     private Integer id;
 
